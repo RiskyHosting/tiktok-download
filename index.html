@@ -7,19 +7,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col justify-between p-4">
-  <div class="flex-grow flex items-center justify-center">
-    <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md">
-      <h1 class="text-3xl font-bold text-center text-purple-400 mb-6">🎬 RiskyTikTokDownloader</h1>
-      <form id="downloadForm" class="space-y-4">
-        <input type="text" id="tiktokUrl" placeholder="Tempel link TikTok..." class="w-full px-4 py-3 rounded-lg bg-gray-700 text-white" required>
-        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-semibold">Download</button>
-      </form>
-      <div id="result" class="mt-6 hidden text-center space-y-4"></div>
-    </div>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col justify-center items-center p-4">
+  <div class="bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-md">
+    <h1 class="text-3xl font-bold text-center text-purple-400 mb-4">🎬 RiskyTikTokDownloader</h1>
+    <form id="downloadForm" class="space-y-4">
+      <input type="text" id="tiktokUrl" placeholder="Tempel link TikTok..." class="w-full px-4 py-3 rounded-lg bg-gray-700 text-white" required>
+      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-semibold">Download</button>
+    </form>
+    <div id="result" class="mt-6 hidden text-center space-y-4"></div>
   </div>
 
-  <footer class="text-center mt-8 text-sm text-gray-400">
+  <footer class="mt-6 text-center text-sm text-gray-400">
     Dibuat oleh <span class="text-purple-300 font-semibold">Risky Dinata</span> dari <span class="text-purple-300">Cirebon, Jawa Barat</span><br>
     Teman dekat <span class="text-pink-300 font-semibold">Angel Hosting</span>
   </footer>
@@ -35,31 +33,30 @@
       result.classList.add('hidden');
 
       if (!inputUrl.includes('tiktok.com')) {
-        return Swal.fire('Error', 'Link TikTok tidak valid!', 'error');
+        return Swal.fire('Gagal', 'Link TikTok tidak valid!', 'error');
       }
 
-      Swal.fire({ title: 'Memproses...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      Swal.fire({ title: 'Memproses video...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
       try {
         let resolved = inputUrl;
         if (inputUrl.includes('vt.tiktok.com')) {
-          const red = await fetch(inputUrl, { method: 'HEAD', redirect: 'follow' });
-          resolved = red.url;
+          const redir = await fetch(inputUrl, { method: 'HEAD', redirect: 'follow' });
+          resolved = redir.url;
         }
 
-        const apiURL = `https://api.betabotz.eu.org/api/download/tiktok?url=${encodeURIComponent(resolved)}&apikey=Btz-KWXC4`;
-        const apiRes = await fetch(apiURL);
-        const data = await apiRes.json();
+        const res = await fetch(`https://api.betabotz.eu.org/api/download/tiktok?url=${encodeURIComponent(resolved)}&apikey=Btz-KWXC4`);
+        const data = await res.json();
 
         if (!data.result || !data.result.nowm) {
-          throw new Error('Gagal mengambil video.');
+          throw new Error('Video tidak ditemukan!');
         }
 
         Swal.close();
 
         const video = document.createElement('video');
-        video.controls = true;
         video.src = data.result.nowm;
+        video.controls = true;
         video.className = 'mx-auto rounded-lg w-full';
 
         const btn = document.createElement('a');
@@ -70,9 +67,10 @@
 
         result.append(video, btn);
         result.classList.remove('hidden');
+
       } catch (err) {
         console.error(err);
-        Swal.fire('Gagal', err.message || 'Terjadi kesalahan.', 'error');
+        Swal.fire('Gagal', err.message || 'Terjadi kesalahan saat mengambil video.', 'error');
       }
     });
   </script>

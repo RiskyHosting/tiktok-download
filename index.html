@@ -51,7 +51,7 @@
       });
 
       try {
-        const res = await fetch(`https://tiktok-risky-proxy.glitch.me/tiktok?url=${encodeURIComponent(url)}`);
+        const res = await fetch(`https://api.betabotz.eu.org/api/download/tiktok?url=${encodeURIComponent(resolved)}&apikey=Btz-KWXC4}`);
         const data = await res.json();
 
         if (data?.result?.nowm) {

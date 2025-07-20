@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TikTok Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+  <div class="bg-gray-800 p-8 rounded-xl shadow-xl w-full max-w-md">
+    <h1 class="text-3xl font-bold text-center text-purple-400 mb-6">🎬 TikTok Downloader</h1>
+    <form id="downloadForm" class="space-y-4">
+      <input type="text" id="tiktokUrl" placeholder="Tempel link TikTok..." class="w-full px-4 py-3 rounded-lg bg-gray-700 text-white" required>
+      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-semibold">Download</button>
+    </form>
+    <div id="result" class="mt-6 hidden text-center space-y-4"></div>
+  </div>
+
+  <script>
+    document.getElementById('downloadForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const inputUrl = document.getElementById('tiktokUrl').value.trim();
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+      result.classList.add('hidden');
+
+      if (!inputUrl.includes('tiktok.com')) {
+        return Swal.fire('Error', 'Link TikTok tidak valid!', 'error');
+      }
+
+      Swal.fire({ title: 'Sedang memproses…', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+      try {
+        let finalUrl = inputUrl;
+        if (inputUrl.includes('vt.tiktok.com')) {
+          const red = await fetch(inputUrl, { method: 'HEAD', redirect: 'follow' });
+          finalUrl = red.url;
+        }
+
+        const apiUrl = `https://tikwm.com/api/?url=${encodeURIComponent(finalUrl)}`;
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        console.log('tikwm:', data);
+
+        if (!data.data || !data.data.play) {
+          throw new Error('Video tidak ditemukan.');
+        }
+
+        Swal.close();
+
+        const video = document.createElement('video');
+        video.controls = true;
+        video.src = data.data.play;
+        video.className = 'mx-auto rounded-lg w-full';
+
+        const btn = document.createElement('a');
+        btn.href = data.data.play;
+        btn.download = 'tiktok.mp4';
+        btn.innerText = '⬇️ Download Video Tanpa Watermark';
+        btn.className = 'inline-block bg-green-600 hover:bg-green-700 px-6 py-2 mt-4 rounded-lg';
+
+        result.append(video, btn);
+        result.classList.remove('hidden');
+      } catch (err) {
+        console.error(err);
+        Swal.fire('Gagal', err.message || 'Terjadi kesalahan', 'error');
+      }
+    });
+  </script>
+</body>
+</html>

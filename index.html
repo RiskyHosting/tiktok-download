@@ -74,6 +74,18 @@
       background-color: var(--bg-dark) !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
+    
+    .video-info {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stats-item {
+      color: var(--text-light);
+    }
+    
+    .stats-item i {
+      color: var(--primary);
+    }
   </style>
 </head>
 <body class="min-h-screen">
@@ -116,21 +128,48 @@
           </button>
         </form>
         
-        <!-- Download Options (Hidden by default) -->
-        <div id="downloadOptions" class="hidden mt-6 space-y-3">
-          <h3 class="text-lg font-semibold text-white mb-2">Pilih Jenis Download:</h3>
-          <button data-type="nowm" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
-            <i class="fas fa-video mr-2"></i>
-            <span>Video Tanpa Watermark</span>
-          </button>
-          <button data-type="hd" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
-            <i class="fas fa-hd mr-2"></i>
-            <span>Video HD Tanpa Watermark</span>
-          </button>
-          <button data-type="audio" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
-            <i class="fas fa-music mr-2"></i>
-            <span>Audio Saja (MP3)</span>
-          </button>
+        <!-- Video Info and Download Options (Hidden by default) -->
+        <div id="videoInfoContainer" class="hidden mt-6">
+          <div class="video-info pb-4 mb-4">
+            <div class="flex items-center space-x-3 mb-3">
+              <img id="authorAvatar" src="" class="w-10 h-10 rounded-full border border-gray-600">
+              <div>
+                <h3 id="authorName" class="font-semibold text-white"></h3>
+                <p id="authorUsername" class="text-gray-400 text-sm"></p>
+              </div>
+            </div>
+            <p id="videoCaption" class="text-gray-300 mb-4"></p>
+            <div class="flex justify-between text-sm">
+              <div class="stats-item">
+                <i class="fas fa-heart mr-1"></i>
+                <span id="likeCount">0</span>
+              </div>
+              <div class="stats-item">
+                <i class="fas fa-comment mr-1"></i>
+                <span id="commentCount">0</span>
+              </div>
+              <div class="stats-item">
+                <i class="fas fa-share mr-1"></i>
+                <span id="shareCount">0</span>
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-semibold text-white mb-3">Pilih Jenis Download:</h3>
+          <div class="space-y-3">
+            <button data-type="nowm" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
+              <i class="fas fa-video mr-2"></i>
+              <span>Video Tanpa Watermark</span>
+            </button>
+            <button data-type="hd" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
+              <i class="fas fa-hd mr-2"></i>
+              <span>Video HD Tanpa Watermark</span>
+            </button>
+            <button data-type="audio" class="w-full option-btn bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center space-x-2">
+              <i class="fas fa-music mr-2"></i>
+              <span>Audio Saja (MP3)</span>
+            </button>
+          </div>
         </div>
       </div>
       
@@ -145,6 +184,7 @@
     </div>
   </section>
 
+  <!-- Rest of the sections (Features, Partners, About, Contact) remain the same as previous code -->
   <!-- Features Section -->
   <section id="features" class="py-16 px-4 bg-gray-900">
     <div class="container mx-auto">
@@ -185,14 +225,14 @@
             <i class="fas fa-code text-primary text-2xl"></i>
           </div>
           <h3 class="text-lg font-bold mb-2 text-white">IndraDev</h3>
-          <p class="text-gray-400 text-sm">Developer yang membantuku membuat kode html</p>
+          <p class="text-gray-400 text-sm">Developer Bot yang membantu saya membuat kode html</p>
         </div>
         <div class="card rounded-xl p-6 text-center max-w-xs">
           <div class="bg-primary/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
             <i class="fas fa-server text-primary text-2xl"></i>
           </div>
           <h3 class="text-lg font-bold mb-2 text-white">Angel Hosting</h3>
-          <p class="text-gray-400 text-sm">Layanan Hosting Panel Terpercaya</p>
+          <p class="text-gray-400 text-sm">Layanan Hosting panel Terpercaya</p>
           <a href="https://t.me/angelhostingg" target="_blank" class="text-primary text-sm mt-2 inline-block">
             <i class="fab fa-telegram mr-1"></i> @angelhostingg
           </a>
@@ -214,7 +254,7 @@
           <div class="md:w-2/3 md:pl-8">
             <h2 class="text-2xl font-bold mb-4 text-white">Tentang Saya</h2>
             <p class="text-gray-400 mb-4">Halo! Saya Risky, seorang pemula di dunia pengembangan bot dan tools digital. Saya berasal dari Cirebon, Jawa Barat.</p>
-            <p class="text-gray-400 mb-6">Tools ini saya buat untuk memudahkan pengguna mendownload konten favorit mereka dari TikTok.</p>
+            <p class="text-gray-400 mb-6">Tools ini saya buat untuk memudahkan pengguna mendownload konten favorit mereka dari TikTok. JANGAN LUPA FOLLOW</p>
             
             <div class="flex flex-wrap gap-3">
               <a href="https://tiktok.com/@risky.nation.vip" target="_blank" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm flex items-center">
@@ -297,7 +337,17 @@
     const downloadButton = document.getElementById('downloadButton');
     const buttonText = document.getElementById('buttonText');
     const buttonIcon = document.getElementById('buttonIcon');
-    const downloadOptions = document.getElementById('downloadOptions');
+    const videoInfoContainer = document.getElementById('videoInfoContainer');
+    
+    // Video info elements
+    const authorAvatar = document.getElementById('authorAvatar');
+    const authorName = document.getElementById('authorName');
+    const authorUsername = document.getElementById('authorUsername');
+    const videoCaption = document.getElementById('videoCaption');
+    const likeCount = document.getElementById('likeCount');
+    const commentCount = document.getElementById('commentCount');
+    const shareCount = document.getElementById('shareCount');
+    
     let currentData = null;
 
     form.addEventListener('submit', async (e) => {
@@ -345,11 +395,16 @@
 
         currentData = data.data;
         
+        // Update video info
+        updateVideoInfo(data.data);
+        
+        // Show video info and download options
+        videoInfoContainer.classList.remove('hidden');
+        
         // Close processing alert
         Swal.close();
         
-        // Show download options
-        downloadOptions.classList.remove('hidden');
+        // Update button
         buttonText.textContent = 'Download Lagi';
         buttonIcon.className = 'fas fa-redo';
 
@@ -368,26 +423,43 @@
       }
     });
 
+    function updateVideoInfo(data) {
+      // Author info
+      if (data.author) {
+        authorAvatar.src = data.author.avatar || 'https://via.placeholder.com/100';
+        authorName.textContent = data.author.nickname || 'Unknown';
+        authorUsername.textContent = `@${data.author.unique_id || 'unknown'}`;
+      }
+      
+      // Video info
+      videoCaption.textContent = data.title || 'No caption';
+      likeCount.textContent = data.digg_count || '0';
+      commentCount.textContent = data.comment_count || '0';
+      shareCount.textContent = data.share_count || '0';
+    }
+
     // Handle download options
-    downloadOptions.addEventListener('click', (e) => {
+    videoInfoContainer.addEventListener('click', (e) => {
       if (!e.target.closest('button')) return;
       
       const type = e.target.closest('button').dataset.type;
       let downloadUrl = '';
       let filename = 'tiktok_video.mp4';
+      let contentType = 'video/mp4';
       
       switch(type) {
         case 'nowm':
           downloadUrl = currentData.play || currentData.wmplay || currentData.images?.[0];
-          filename = 'tiktok_nowm.mp4';
+          filename = `tiktok_${currentData.id}_nowm.mp4`;
           break;
         case 'hd':
           downloadUrl = currentData.hdplay || currentData.play || currentData.wmplay || currentData.images?.[0];
-          filename = 'tiktok_hd.mp4';
+          filename = `tiktok_${currentData.id}_hd.mp4`;
           break;
         case 'audio':
           downloadUrl = currentData.music;
-          filename = 'tiktok_audio.mp3';
+          filename = `tiktok_${currentData.id}_audio.mp3`;
+          contentType = 'audio/mpeg';
           break;
       }
       
@@ -404,24 +476,49 @@
       }
       
       // Trigger download
-      const a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = filename;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      
-      // Show success message
+      downloadFile(downloadUrl, filename, contentType);
+    });
+
+    function downloadFile(url, filename, contentType) {
+      // Show downloading alert
       Swal.fire({
-        icon: 'success',
-        title: 'Download Dimulai',
-        text: 'File akan segera didownload',
+        title: 'Mempersiapkan Download...',
+        html: 'File akan segera didownload ke galeri Anda',
         background: '#0f172a',
         color: '#e2e8f0',
-        confirmButtonColor: '#818cf8'
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
       });
-    });
+      
+      // Create hidden iframe for download
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = url;
+      document.body.appendChild(iframe);
+      
+      // Alternative method for direct download
+      setTimeout(() => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Download Dimulai',
+          text: 'File akan disimpan di galeri Anda',
+          background: '#0f172a',
+          color: '#e2e8f0',
+          confirmButtonColor: '#818cf8'
+        });
+      }, 1000);
+    }
 
     function resetButton() {
       buttonText.textContent = 'Download Sekarang';

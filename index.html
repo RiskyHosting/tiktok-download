@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RiskyTikTokDownloader</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Risky TikTok Downloader</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap');
+    body {
+      font-family: 'Chakra Petch', sans-serif;
+      background: radial-gradient(circle, #1f2937, #111827);
+      color: white;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<body class="flex items-center justify-center min-h-screen px-4">
 
-  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-4 text-center">Risky TikTok Downloader</h1>
+  <div class="bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-8 max-w-md w-full animate-fadeIn">
+    <h1 class="text-3xl font-bold text-center mb-6 text-white drop-shadow-lg">🎵 Risky TikTok Downloader</h1>
 
-    <input type="text" id="tiktokUrl" placeholder="Masukkan URL video TikTok"
-      class="w-full p-3 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    <input id="tiktokUrl" type="text" placeholder="Tempel link video TikTok di sini"
+      class="w-full px-4 py-3 text-sm text-gray-100 bg-gray-800 border border-gray-700 rounded-xl placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none transition mb-4" />
 
-    <button onclick="downloadVideo()"
-      class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Download Video</button>
+    <button onclick="downloadVideo()" class="w-full bg-blue-600 hover:bg-blue-700 transition py-3 rounded-xl text-white font-semibold text-lg shadow-lg">
+      🔽 Download Sekarang
+    </button>
 
-    <div id="result" class="mt-6 hidden">
-      <h2 class="text-lg font-semibold mb-2">Preview Video:</h2>
-      <video id="previewVideo" controls class="w-full rounded-lg"></video>
-      <a id="downloadLink" class="block text-center mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition" download>Download Tanpa Watermark</a>
+    <div id="result" class="mt-8 hidden">
+      <h2 class="text-xl font-semibold mb-2">📽️ Preview Video:</h2>
+      <video id="previewVideo" controls class="w-full rounded-xl border border-gray-700 shadow-lg"></video>
+      <a id="downloadLink" class="block text-center mt-4 bg-green-600 hover:bg-green-700 transition py-2 rounded-xl text-white font-semibold" download>
+        ⬇️ Download Tanpa Watermark
+      </a>
     </div>
   </div>
 
@@ -29,35 +40,34 @@
     async function downloadVideo() {
       const url = document.getElementById("tiktokUrl").value.trim();
       if (!url) {
-        return Swal.fire("Oops!", "URL TikTok tidak boleh kosong!", "warning");
+        return Swal.fire("Yah!", "Link TikTok-nya belum dimasukin bro 😅", "warning");
       }
 
       Swal.fire({
-        title: "Memproses...",
-        text: "Tunggu sebentar, sedang mengambil video...",
+        title: "Tunggu sebentar...",
+        text: "Lagi ambil video dari server...",
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading()
       });
 
       try {
-        const res = await fetch(`https://api.siputzx.my.id/api/tiktok/v2?url=${encodeURIComponent(url)}`);
+        const res = await fetch(`https://tiktok-risky-proxy.glitch.me/tiktok?url=${encodeURIComponent(url)}`);
         const data = await res.json();
 
-        if (data && data.result && data.result.nowm) {
+        if (data?.result?.nowm) {
           document.getElementById("previewVideo").src = data.result.nowm;
           document.getElementById("downloadLink").href = data.result.nowm;
           document.getElementById("downloadLink").setAttribute("download", "tiktok.mp4");
           document.getElementById("result").classList.remove("hidden");
-
-          Swal.fire("Berhasil!", "Video berhasil diambil!", "success");
+          Swal.fire("Berhasil!", "Video berhasil dimuat!", "success");
         } else {
-          throw new Error("Gagal mengambil video");
+          throw new Error("Gagal ambil data.");
         }
-      } catch (err) {
-        console.error(err);
-        Swal.fire("Error", "Gagal mengambil video. Coba periksa URL-nya atau coba lagi nanti.", "error");
+      } catch (error) {
+        Swal.fire("Error!", "Gagal ambil video. Cek URL-nya atau coba lagi.", "error");
       }
     }
   </script>
+
 </body>
 </html>
